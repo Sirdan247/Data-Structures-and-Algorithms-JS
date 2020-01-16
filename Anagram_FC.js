@@ -1,30 +1,25 @@
-function anagram(str1,str2){
-// check if both have the same length
-// create freqcounter object for each string
-// count freq of each character for both strings
-// check if they have the same keys and
-// check if each key have the same frequencies
+function validAnagram(first, second) {
+	if (first.length !== second.length) {
+		return false;
+	}
 
-    if(str1.length !== str2.length){
-        return false;
-    }
-    let freqcounter1 = {}, freqcounter2 = {};
-    for(let val of str1){
-        freqcounter1[val] = (freqcounter1[val] || 0) + 1;
-    }
-    for(let val of str2){
-        freqcounter2[val] = (freqcounter2[val] || 0) + 1;
-    }
-    for(let key in freqcounter1){
-        if(!(key in freqcounter2)){
-            return false;
-        }
-        if(freqcounter1[key] !== freqcounter2[key]){
-            return false;
-        }
-    }
-    return true;
+	const lookup = {};
 
+	for (let i = 0; i < first.length; i++) {
+		let letter = first[i];
+		// if letter exists, increment, otherwise set to 1
+		lookup[letter] ? (lookup[letter] += 1) : (lookup[letter] = 1);
+	}
+
+	for (let i = 0; i < second.length; i++) {
+		let letter = second[i];
+		// can't find letter or letter is zero then it's not an anagram
+		if (!lookup[letter]) {
+			return false;
+		} else {
+			lookup[letter] -= 1;
+		}
+	}
+	return true;
 }
-
-anagram('iceman', 'cinema')
+validAnagram('anagram', 'nagaram');
